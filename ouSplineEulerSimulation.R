@@ -73,24 +73,3 @@ ouSplineEulerSimulation <- function(x0, gamma, spline, breaks, sigma=1, t) {
         }
         list(t = t, y = y, mu = muT)
 }
-
-if(FALSE) {
-        # model splines (for plotting)
-        lenSeq <- 100
-        xy <- lapply(seq_len(n), function(i) {
-                             pTmp <- breaks[i+1]
-                             pBackTmp <- breaks[i]
-                        tmpSeq <- seq(from = pBackTmp, to = pTmp, length = lenSeq)
-                        tmpSeq <- tmpSeq[-lenSeq] 
-                        tmpSeqMod <- tmpSeq %% maxBreak
-                        xQuadratic <- outer(tmpSeqMod, degree, "^")
-                        iMod <- i %% maxBreak
-                        if (iMod == 0) iMod <- maxBreak
-                        splineTmp <- spline[iMod,]
-                        yTmp <- as.vector(tcrossprod(splineTmp, xQuadratic))
-                        #yTmp
-                        list(x = tmpSeq, y = yTmp)
-                                             })
-        xSpline <- unlist(lapply(seq_len(n), function(i) xy[[i]]$x))
-        ySpline <- unlist(lapply(seq_len(n), function(i) xy[[i]]$y))
-}

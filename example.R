@@ -1,5 +1,7 @@
 #! /usr/bin/env Rscript
 
+source("ouSplineEulerSimulation.R")
+
 # ouSplines R function required: see splineFunction.R avaliable at
 # https://github.com/pws3141/splineEstimation
 # source("../sdeOUSplineMu/splineFunction.R")
@@ -18,11 +20,11 @@ spline <- ouSplines(means = exampleMeans, breaks = partition)
 
 # simulate
 tau <- seq(from = 0, to = 120, length = 6000)
-ouSim <- ouSplineEulerSimulation(x0 = exampleMeans[1] + 20, gamma = 1, 
+ouSim <- ouSplineEulerSimulation(x0 = exampleMeans[1] + 20, g = 1, 
                                  spline = spline$par, breaks = partition, 
-                                 sigma = 10, t = tau)                                              
+                                 s = 10, t = tau)                                              
 
-#plotRange <- range(c(ouSim$y, ouSim$mu))
-#plot(ouSim$t, ouSim$y, t = 'l', lwd = 2, ylim = plotRange)
-#lines(ouSim$t, ouSim$mu, col = rgb(0, 0, 0, .5))
+plotRange <- range(c(ouSim$y, ouSim$mu))
+plot(ouSim$t, ouSim$y, t = 'l', lwd = 2, ylim = plotRange)
+lines(ouSim$t, ouSim$mu, col = rgb(0, 0, 0, .5))
 
